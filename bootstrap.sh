@@ -72,6 +72,7 @@ cd /var/www/html/
 sudo git clone "https://$1:$2@github.com/KardanovIR/mysql2postgres.git"
 
 # creating database 
+sudo -u postgres psql -c "alter user postgres password 'apassword';"
 sudo -u postgres psql -c "CREATE DATABASE evendate WITH ENCODING 'UTF8'"
 
 # running migration
