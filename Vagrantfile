@@ -5,6 +5,8 @@ require 'yaml'
 
 settings = YAML.load_file 'vagrant.yml'
 
+puts settings 
+
 if ! File.exists?(".vagrant/machines/default/virtualbox/id")
   print "Write sync folder full path: "
   settings['sync_folder'] = STDIN.gets.chomp
@@ -15,6 +17,8 @@ if ! File.exists?(".vagrant/machines/default/virtualbox/id")
   github_login = STDIN.gets.chomp
   print "Write GitHub password: "
   github_password = STDIN.gets.chomp
+  print "Write new postgres password: "
+  postgres_password = STDIN.gets.chomp
 end
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
@@ -43,7 +47,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Define the bootstrap file: A (shell) script that runs after first setup of your box (= provisioning)
   config.vm.provision "shell" do |s|
 	s.path = "bootstrap.sh"
-    s.args   = "#{github_login} #{github_password}"
+    s.args   = "#{github_login} #{github_password} #{postgres_password}"
   end
 
 end
