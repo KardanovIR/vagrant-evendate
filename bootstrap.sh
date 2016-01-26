@@ -59,6 +59,10 @@ sudo a2enmod rewrite
 # installing php drivers 
 sudo apt-get -y install php-pgsql
 sudo apt-get -y install php-mysql
+sudo apt-get -y install php-pear
+sudo apt-get -y install php-dev
+sudo pecl install xdebug
+
 
 
 # restart apache
@@ -81,3 +85,21 @@ php index.php config.json
 
 cd /var/www/html/${PROJECTFOLDER}/node
 sudo npm install --no-bin-links
+
+
+cd /
+sudo wget http://xdebug.org/files/xdebug-2.4.0rc3.tgz
+sudo tar -xvzf xdebug-2.4.0rc3.tgz
+cd xdebug-2.4.0RC3/
+sudo phpize
+sudo ./configure
+sudo make
+sudo cp modules/xdebug.so /usr/lib/php/20151012
+
+
+sudo service apache2 restart
+
+sudo apt-get -y install libsasl2-dev
+sudo apt-get -y install libcurl4-openssl-dev pkg-config
+sudo pecl install mongodb
+sudo touch /etc/php5/conf.d/mongo.ini
