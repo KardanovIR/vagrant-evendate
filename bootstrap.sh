@@ -106,3 +106,13 @@ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list
 sudo apt-get update
 sudo apt-get install -y mongodb-org
+
+sudo php -v
+sudo psql --version
+sudo mongod -v
+sudo node -v
+sudo apache2 -v
+
+
+read  -p "Press enter to show phpinfo()" mainmenuinput
+sudo php -r "phpinfo();"
