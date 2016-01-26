@@ -39,12 +39,7 @@
 	
 	file_put_contents($php_ini, $data);
 	
-<<<<<<< HEAD
 	echo "PHP configurations updated";
-=======
-	echo "PHP configurations updated";ph
->>>>>>> 7d32fed9c062493561c55645edb604204e6a2c35
-	
 	exec('sudo echo "" >> /etc/php/7.0/apache2/php.ini');
 	
 	/*change mongodb settings*/
