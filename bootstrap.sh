@@ -102,4 +102,7 @@ sudo service apache2 restart
 sudo apt-get -y install libsasl2-dev
 sudo apt-get -y install libcurl4-openssl-dev pkg-config
 sudo pecl install mongodb
-sudo touch /etc/php5/conf.d/mongo.ini
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list
+sudo apt-get update
+sudo apt-get install -y mongodb-org

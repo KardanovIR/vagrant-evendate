@@ -40,7 +40,6 @@
 	file_put_contents($php_ini, $data);
 	
 	echo "PHP configurations updated";
-	exec('sudo echo "" >> /etc/php/7.0/apache2/php.ini');
 	
 	/*change mongodb settings*/
 	
