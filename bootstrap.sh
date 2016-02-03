@@ -20,7 +20,8 @@ echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main 9.5" > /etc/
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 
 # adding php 7.0 repo
-sudo add-apt-repository -y ppa:ondrej/php-7.0
+sudo apt-get install -y software-properties-common
+sudo add-apt-repository -y --force-yes ppa:ondrej/php-7.0
 
 # update after repos 
 sudo apt-get update
@@ -30,6 +31,8 @@ sudo apt-get install -y php7.0
 sudo apt-get install -y postgresql-9.5
 
 # installing node v 4.* LTS 
+sudo apt-get install -y curl
+
 curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
@@ -55,12 +58,13 @@ sudo apt-get update
 
 # enable mod_rewrite
 sudo a2enmod rewrite
+sudo a2enmod headers
 
 # installing php drivers 
-sudo apt-get -y install php-pgsql
-sudo apt-get -y install php-mysql
-sudo apt-get -y install php-pear
-sudo apt-get -y install php-dev
+sudo apt-get -y --force-yes install php-pgsql
+sudo apt-get -y --force-yes install php-mysql
+sudo apt-get -y --force-yes install php-pear
+sudo apt-get -y --force-yes install php-dev
 sudo pecl install xdebug
 
 
