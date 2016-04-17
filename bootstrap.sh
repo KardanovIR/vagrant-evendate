@@ -21,7 +21,7 @@ wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-
 
 # adding php 7.0 repo
 sudo apt-get install -y software-properties-common
-sudo add-apt-repository -y --force-yes ppa:ondrej/php-7.0
+sudo LC_ALL=en_US.UTF-8 add-apt-repository -y ppa:ondrej/php
 
 # update after repos 
 sudo apt-get update
@@ -35,6 +35,11 @@ sudo apt-get install -y curl
 
 curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
 sudo apt-get install -y nodejs
+
+#adding libapache2-mod-php7.0
+sudo apt-get install libapache2-mod-php7.0
+sudo service apache2 restart
+
 
 #run php script for configurations editing
 sudo php /var/www/html/init.php
