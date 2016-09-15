@@ -4,6 +4,9 @@
 PASSWORD='evendate'
 PROJECTFOLDER='evendate'
 
+# create project folder
+sudo mkdir "/var/www/html/"
+
 # update / upgrade
 sudo apt-get update
 sudo apt-get -y upgrade
@@ -92,18 +95,8 @@ sudo cp modules/xdebug.so /usr/lib/php/20151012
 
 sudo service apache2 restart
 
-# installing mongodb
-sudo apt-get -y install libsasl2-dev
-sudo apt-get -y install libcurl4-openssl-dev pkg-config
-sudo pecl install mongodb
-sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
-echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list
-sudo apt-get update
-sudo apt-get install -y mongodb-org
-
 sudo php -v
 sudo psql --version
-sudo mongod -v
 sudo node -v
 sudo apache2 -v
 
