@@ -4,9 +4,8 @@
 PASSWORD='evendate'
 PROJECTFOLDER='evendate'
 
-
 # create project folder
-sudo mkdir "/var/www/html/${PROJECTFOLDER}"
+sudo mkdir "/var/www/html/"
 
 # update / upgrade
 sudo apt-get update
@@ -27,29 +26,26 @@ sudo LC_ALL=en_US.UTF-8 add-apt-repository -y ppa:ondrej/php
 sudo apt-get update
 
 # install php 7.0 and postgresql 9.5
-sudo apt-get install -y php7.0
+sudo apt-get install -y --force-yes php7.0
 sudo apt-get install -y postgresql-9.5
 
-# installing node v 4.* LTS 
+# installing node v 6.* LTS 
 sudo apt-get install -y curl
-
-curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
 #adding libapache2-mod-php7.0
 sudo apt-get install libapache2-mod-php7.0
 sudo service apache2 restart
 
-
 #run php script for configurations editing
 sudo php /var/www/html/init.php
-
 
 # setup hosts file
 VHOST=$(cat <<EOF
 <VirtualHost *:80>
-    DocumentRoot "/var/www/html/${PROJECTFOLDER}"
-    <Directory "/var/www/html/${PROJECTFOLDER}">
+    DocumentRoot "/var/www/html/"
+    <Directory "/var/www/html/">
         AllowOverride All
         Require all granted
     </Directory>
@@ -57,7 +53,6 @@ VHOST=$(cat <<EOF
 EOF
 )
 echo "${VHOST}" > /etc/apache2/sites-available/000-default.conf
-
 
 sudo apt-get update
 
@@ -72,29 +67,22 @@ sudo apt-get -y --force-yes install php-pear
 sudo apt-get -y --force-yes install php-dev
 sudo pecl install xdebug
 
-
-
 # restart apache
 service apache2 restart
 
-# install git
-sudo apt-get -y install git
-
-# clonning repo fot mysql2postgres migration from production server
-cd /var/www/html/
-sudo git clone "https://$1:$2@github.com/KardanovIR/mysql2postgres.git"
+sudo apt-get -yq --force-yes dist-upgrade
+sudo apt-get install -yq language-pack-en-base
+sudo locale-gen en_US.UTF-8
 
 # creating database 
-sudo -u postgres psql -c "alter user postgres password '${PROJECTFOLDER}';"
-sudo -u postgres psql -c "CREATE DATABASE evendate WITH ENCODING 'UTF8'"
+sudo -u postgres psql -c "alter user postgres password 'evendate';"
+sudo -u postgres psql -c "CREATE DATABASE evendate WITH TEMPLATE = template0 ENCODING = 'UTF8'"
+# sudo su postgres
+# sudo createdb -E UTF8 -T template0 --locale=en_US.utf8 evendate
 
-# running migration
-cd mysql2postgres
-php index.php config.json
-
-cd /var/www/html/${PROJECTFOLDER}/node
+# installing dependences
+cd /var/www/html/node
 sudo npm install --no-bin-links
-
 
 cd /
 sudo wget http://xdebug.org/files/xdebug-2.4.0rc3.tgz
@@ -105,20 +93,10 @@ sudo ./configure
 sudo make
 sudo cp modules/xdebug.so /usr/lib/php/20151012
 
-
 sudo service apache2 restart
-
-sudo apt-get -y install libsasl2-dev
-sudo apt-get -y install libcurl4-openssl-dev pkg-config
-sudo pecl install mongodb
-sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
-echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list
-sudo apt-get update
-sudo apt-get install -y mongodb-org
 
 sudo php -v
 sudo psql --version
-sudo mongod -v
 sudo node -v
 sudo apache2 -v
 
